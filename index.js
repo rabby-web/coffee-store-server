@@ -98,6 +98,19 @@ async function run() {
       res.send(result);
     });
 
+    // patch
+    app.patch("/user", async (req, res) => {
+      const user = req.body;
+      const filter = { email: user.email };
+      const updateDoc = {
+        $set: {
+          lastLoggedAt: user.lastLoggedAt,
+        },
+      };
+      const result = await userCollection.updateOne(filter, updateDoc);
+      res.send(result);
+    });
+
     // delete
     app.delete("/user/:id", async (req, res) => {
       const id = req.params.id;
